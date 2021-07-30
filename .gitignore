@@ -53,5 +53,8 @@ dkms.conf
 
 *.bin
 *.elf
-./pio/build
-.pio/build/nodemcu-32s/.sconsign38.dblite
+*.checksum
+*.dblite
+.pio/*
+
+credentials.h

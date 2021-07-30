@@ -1,8 +1,11 @@
 #include <Arduino.h>
 #include "epd_driver.h"
 #include "esp_adc_cal.h"
+#include <WiFi.h>
 
 #include "opensans8b.h"
+
+#include "credentials.h"
 
 enum alignment
 {
@@ -10,14 +13,14 @@ enum alignment
   RIGHT,
   CENTER
 };
-#define White         0xFF
-#define LightGrey     0xBB
-#define Grey          0x88
-#define DarkGrey      0x44
-#define Black         0x00
+#define White 0xFF
+#define LightGrey 0xBB
+#define Grey 0x88
+#define DarkGrey 0x44
+#define Black 0x00
 
 long StartTime = 0;
-long SleepTimer = 10;
+long SleepTimer = 20; //sec
 int vref = 1100;
 
 GFXfont currentFont;
@@ -27,24 +30,67 @@ void BeginSleep();
 void InitialiseSystem();
 void DisplayStatus();
 void DisplayCalendar();
+uint8_t StartWiFi();
+void StopWiFi();
+bool ObtainCalendarData(WiFiClient &client);
 void edp_update();
-
 
 void setup()
 {
   InitialiseSystem();
+  if (StartWiFi() == WL_CONNECTED)
+  {
+    WiFiClient client;
+    ObtainCalendarData(client);
 
-  epd_poweron();
-  epd_clear();
-  DisplayStatus();
-  DisplayCalendar();
-  edp_update();
-  epd_poweroff_all();
-
+    StopWiFi();
+    epd_poweron();
+    epd_clear();
+    DisplayStatus();
+    DisplayCalendar();
+    edp_update();
+    epd_poweroff_all();
+  }
   BeginSleep();
 }
 
 void loop() {}
+
+bool ObtainCalendarData(WiFiClient &client){
+  return false;
+}
+
+uint8_t StartWiFi()
+{
+  Serial.println("\r\nConnecting to: " + String(ssid));
+  IPAddress dns(8, 8, 8, 8);
+  WiFi.disconnect();
+  WiFi.mode(WIFI_STA);
+  WiFi.setAutoConnect(true);
+  WiFi.setAutoReconnect(true);
+  WiFi.begin(ssid, password);
+  if (WiFi.waitForConnectResult() != WL_CONNECTED)
+  {
+    Serial.printf("STA: Failed!\n");
+    WiFi.disconnect(false);
+    delay(500);
+    WiFi.begin(ssid, password);
+  }
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    Serial.println("WiFi connected at: " + WiFi.localIP().toString());
+  }
+  else
+    Serial.println("WiFi connection *** FAILED ***");
+  return WiFi.status();
+}
+
+void StopWiFi()
+{
+  WiFi.disconnect();
+  WiFi.mode(WIFI_OFF);
+  Serial.println("WiFi switched Off");
+}
 
 void BeginSleep()
 {
@@ -134,7 +180,7 @@ void DrawBattery(int x, int y)
 void DisplayStatus()
 {
   setFont(OpenSans8B);
-  DrawBattery(750, 20);
+  DrawBattery(770, 20);
 }
 
 void DisplayCalendar()
