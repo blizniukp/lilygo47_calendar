@@ -10,7 +10,11 @@ enum alignment
   RIGHT,
   CENTER
 };
-#define Black 0x00
+#define White         0xFF
+#define LightGrey     0xBB
+#define Grey          0x88
+#define DarkGrey      0x44
+#define Black         0x00
 
 long StartTime = 0;
 long SleepTimer = 10;
@@ -21,7 +25,8 @@ uint8_t *framebuffer;
 
 void BeginSleep();
 void InitialiseSystem();
-void DisplayWeather();
+void DisplayStatus();
+void DisplayCalendar();
 void edp_update();
 
 
@@ -31,7 +36,8 @@ void setup()
 
   epd_poweron();
   epd_clear();
-  DisplayWeather();
+  DisplayStatus();
+  DisplayCalendar();
   edp_update();
   epd_poweroff_all();
 
@@ -125,8 +131,12 @@ void DrawBattery(int x, int y)
   }
 }
 
-void DisplayWeather()
+void DisplayStatus()
 {
   setFont(OpenSans8B);
-  DrawBattery(600, 20);
+  DrawBattery(750, 20);
+}
+
+void DisplayCalendar()
+{
 }
