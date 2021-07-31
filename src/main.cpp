@@ -3,7 +3,7 @@
 #include "esp_adc_cal.h"
 #include <WiFi.h>
 
-#include "opensans8b.h"
+#include "fonts/opensans8b.h"
 
 #include "credentials.h"
 
