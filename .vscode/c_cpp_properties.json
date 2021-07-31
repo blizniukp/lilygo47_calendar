@@ -10,6 +10,8 @@
             "includePath": [
                 "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/include",
                 "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/src",
+                "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
+                "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/.pio/libdeps/nodemcu-32s/ArduinoJson/src",
                 "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/.pio/libdeps/nodemcu-32s/LilyGoEPD47/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/config",
@@ -99,7 +101,6 @@
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                 "/home/pawel/.platformio/packages/tool-unity",
@@ -110,6 +111,8 @@
                 "path": [
                     "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/include",
                     "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/src",
+                    "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
+                    "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/.pio/libdeps/nodemcu-32s/ArduinoJson/src",
                     "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/.pio/libdeps/nodemcu-32s/LilyGoEPD47/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/config",
@@ -199,7 +202,6 @@
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                    "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                     "/home/pawel/.platformio/packages/tool-unity",

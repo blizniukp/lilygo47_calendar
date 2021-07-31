@@ -58,3 +58,6 @@ dkms.conf
 .pio/*
 
 credentials.h
+.pio/build/project.checksum
+.vscode/c_cpp_properties.json
+.vscode/c_cpp_properties.json
