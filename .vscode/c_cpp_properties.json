@@ -10,8 +10,9 @@
             "includePath": [
                 "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/include",
                 "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/src",
-                "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/.pio/libdeps/nodemcu-32s/ArduinoJson/src",
+                "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
+                "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/.pio/libdeps/nodemcu-32s/LilyGoEPD47/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/config",
@@ -101,7 +102,6 @@
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                 "/home/pawel/.platformio/packages/tool-unity",
                 ""
@@ -111,8 +111,9 @@
                 "path": [
                     "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/include",
                     "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/src",
-                    "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/.pio/libdeps/nodemcu-32s/ArduinoJson/src",
+                    "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
+                    "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "/home/pawel/projekty/lilygo47_calendar/lilygo47_calendar/.pio/libdeps/nodemcu-32s/LilyGoEPD47/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/config",
@@ -202,7 +203,6 @@
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                    "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "/home/pawel/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                     "/home/pawel/.platformio/packages/tool-unity",
                     ""
@@ -212,6 +212,7 @@
                 "PLATFORMIO=50101",
                 "ARDUINO_ESP32_DEV",
                 "BOARD_HAS_PSRAM",
+                "CORE_DEBUG_LEVEL=3",
                 "ESP32",
                 "ESP_PLATFORM",
                 "F_CPU=240000000L",
@@ -220,7 +221,7 @@
                 "ARDUINO=10805",
                 "ARDUINO_ARCH_ESP32",
                 "ARDUINO_VARIANT=\"esp32\"",
-                "ARDUINO_BOARD=\"Espressif ESP32 Dev Module\"",
+                "ARDUINO_BOARD=\"Espressif ESP-WROVER-KIT\"",
                 ""
             ],
             "cStandard": "c99",

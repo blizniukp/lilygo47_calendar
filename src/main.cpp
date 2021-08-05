@@ -1,11 +1,17 @@
+#define DEBUG 1
+#define EPD 0
+
 #include <Arduino.h>
+#if EPD
 #include "epd_driver.h"
 #include "esp_adc_cal.h"
+#endif
 #include <WiFi.h>
 
-#include "fonts/opensans8b.h"
+#include "config.h"
 
-#include "credentials.h"
+#include "fonts/opensans8b.h"
+#include "client.h"
 
 enum alignment
 {
@@ -20,7 +26,7 @@ enum alignment
 #define Black 0x00
 
 long StartTime = 0;
-long SleepTimer = 20; //sec
+long SleepTimer = SLEEP_TIMER; //sec
 int vref = 1100;
 
 GFXfont currentFont;
@@ -37,6 +43,7 @@ void edp_update();
 
 void setup()
 {
+  esp_log_level_set("", ESP_LOG_VERBOSE);
   InitialiseSystem();
   if (StartWiFi() == WL_CONNECTED)
   {
@@ -44,37 +51,44 @@ void setup()
     ObtainCalendarData(client);
 
     StopWiFi();
+#if EPD
     epd_poweron();
     epd_clear();
     DisplayStatus();
     DisplayCalendar();
     edp_update();
     epd_poweroff_all();
+#endif
   }
   BeginSleep();
 }
 
 void loop() {}
 
-bool ObtainCalendarData(WiFiClient &client){
+bool ObtainCalendarData(WiFiClient &client)
+{
+
+  String response = httpsGet();
+  Serial.printf("Response: %s\n\n", response.c_str());
+
   return false;
 }
 
 uint8_t StartWiFi()
 {
-  Serial.println("\r\nConnecting to: " + String(ssid));
+  Serial.println("\r\nConnecting to: " + String(WIFI_SSID));
   IPAddress dns(8, 8, 8, 8);
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);
   WiFi.setAutoConnect(true);
   WiFi.setAutoReconnect(true);
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   if (WiFi.waitForConnectResult() != WL_CONNECTED)
   {
     Serial.printf("STA: Failed!\n");
     WiFi.disconnect(false);
     delay(500);
-    WiFi.begin(ssid, password);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   }
   if (WiFi.status() == WL_CONNECTED)
   {
@@ -109,13 +123,16 @@ void InitialiseSystem()
   while (!Serial)
     ;
   Serial.println(String(__FILE__) + "\nStarting...");
+#if EPD
   epd_init();
   framebuffer = (uint8_t *)ps_calloc(sizeof(uint8_t), EPD_WIDTH * EPD_HEIGHT / 2);
   if (!framebuffer)
     Serial.println("Memory alloc failed!");
   memset(framebuffer, 0xFF, EPD_WIDTH * EPD_HEIGHT / 2);
+#endif
 }
 
+#if EPD
 void edp_update()
 {
   epd_draw_grayscale_image(epd_full_screen(), framebuffer);
@@ -186,3 +203,4 @@ void DisplayStatus()
 void DisplayCalendar()
 {
 }
+#endif

@@ -57,7 +57,7 @@ dkms.conf
 *.dblite
 .pio/*
 
-credentials.h
+config.h
 .pio/build/project.checksum
 .vscode/c_cpp_properties.json
 .vscode/c_cpp_properties.json
