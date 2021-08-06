@@ -31,6 +31,7 @@ enum alignment
 #define SCREEN_HEIGHT EPD_HEIGHT
 
 long StartTime = 0;
+long DrawingTime = 0;
 long SleepTimer = SLEEP_TIMER; //sec
 int vref = 1100;
 
@@ -57,6 +58,7 @@ void setup()
 
     StopWiFi();
 #if EPD
+    DrawingTime = millis();
     epd_poweron();
     epd_clear();
     DisplayStatus();
@@ -114,7 +116,7 @@ void BeginSleep()
 {
   epd_poweroff_all();
   esp_sleep_enable_timer_wakeup(SleepTimer * 1000000LL);
-  Serial.println("Awake for : " + String((millis() - StartTime) / 1000.0, 3) + "-secs");
+  Serial.println("Awake for : " + String((millis() - StartTime) / 1000.0, 3) + "-secs. Drawing time: " + String((millis() - DrawingTime) / 1000.0, 3) + "-secs.");
   Serial.println("Entering " + String(SleepTimer) + " (secs) of sleep time");
   Serial.println("Starting deep-sleep period...");
   esp_deep_sleep_start();
