@@ -2,26 +2,17 @@
 #define CONFIG_H_FILE
 
 //WiFi credentials
-#define ssid                  "Your WiFi SSID"
-#define password              "Your PASSWORD"
+#define WIFI_SSID             "Your WiFi SSID"
+#define WIFI_PASSWORD         "Your PASSWORD"
 
 #define SCRIPT_ID             "YOUR_GOOGLE_SCRIPT_ID"
-#define SLEEP_TIMER           (60)
-
-#define MICROSEC              1000000L
-#define MILLISEC              1000L
-#define SEC                   1L
-#define MINUTE                (unsigned int) 60L*SEC
-#define HOUR                  (unsigned int) 60L*MINUTE
-#define DAY                   (unsigned long) 24L*HOUR
+#define SLEEP_TIMER           (360)
 
 // HTTPS parameters
 #define HTTPS_PORT            443
 #define HOST                  "script.google.com"
 #define URL                   "https://" HOST "/macros/s/" SCRIPT_ID "/exec"
-#define SUCCESS               "\"status\":\"success\""
-#define MAX_WIFI_ATTEMPTS     60
-#define MAX_HTTPS_ATTEMPTS    5
-#define HTTPS_REINTENT_DELAY  2*SEC
 
+//EPD
+#define MAX_CALENDAR_ROW      (8)
 #endif
