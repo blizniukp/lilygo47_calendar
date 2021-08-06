@@ -1,5 +1,5 @@
 #define DEBUG 1
-#define EPD 0
+#define EPD 1
 
 #include <Arduino.h>
 #if EPD
@@ -7,10 +7,12 @@
 #include "esp_adc_cal.h"
 #endif
 #include <WiFi.h>
+#include <ArduinoJson.h>
 
 #include "config.h"
 
 #include "fonts/opensans8b.h"
+#include "fonts/opensans12b.h"
 #include "client.h"
 
 enum alignment
@@ -25,6 +27,9 @@ enum alignment
 #define DarkGrey 0x44
 #define Black 0x00
 
+#define SCREEN_WIDTH EPD_WIDTH
+#define SCREEN_HEIGHT EPD_HEIGHT
+
 long StartTime = 0;
 long SleepTimer = SLEEP_TIMER; //sec
 int vref = 1100;
@@ -35,10 +40,10 @@ uint8_t *framebuffer;
 void BeginSleep();
 void InitialiseSystem();
 void DisplayStatus();
-void DisplayCalendar();
+void DisplayCalendar(String *calendarData);
 uint8_t StartWiFi();
 void StopWiFi();
-bool ObtainCalendarData(WiFiClient &client);
+String ObtainCalendarData(WiFiClient &client);
 void edp_update();
 
 void setup()
@@ -48,14 +53,14 @@ void setup()
   if (StartWiFi() == WL_CONNECTED)
   {
     WiFiClient client;
-    ObtainCalendarData(client);
+    String response = ObtainCalendarData(client);
 
     StopWiFi();
 #if EPD
     epd_poweron();
     epd_clear();
     DisplayStatus();
-    DisplayCalendar();
+    DisplayCalendar(&response);
     edp_update();
     epd_poweroff_all();
 #endif
@@ -65,13 +70,12 @@ void setup()
 
 void loop() {}
 
-bool ObtainCalendarData(WiFiClient &client)
+String ObtainCalendarData(WiFiClient &client)
 {
-
   String response = httpsGet();
   Serial.printf("Response: %s\n\n", response.c_str());
 
-  return false;
+  return response;
 }
 
 uint8_t StartWiFi()
@@ -148,6 +152,26 @@ void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
   epd_fill_rect(x, y, w, h, color, framebuffer);
 }
 
+void drawFastVLine(int16_t x0, int16_t y0, int length, uint16_t color)
+{
+  epd_draw_vline(x0, y0, length, color, framebuffer);
+}
+
+void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color)
+{
+  epd_write_line(x0, y0, x1, y1, color, framebuffer);
+}
+
+void fillCircle(int x, int y, int r, uint8_t color)
+{
+  epd_fill_circle(x, y, r, color, framebuffer);
+}
+
+void drawCircle(int x0, int y0, int r, uint8_t color)
+{
+  epd_draw_circle(x0, y0, r, color, framebuffer);
+}
+
 void drawString(int x, int y, String text, alignment align)
 {
   char *data = const_cast<char *>(text.c_str());
@@ -198,9 +222,84 @@ void DisplayStatus()
 {
   setFont(OpenSans8B);
   DrawBattery(770, 20);
+  drawLine(0, 20, SCREEN_WIDTH, 22, Black);
 }
 
-void DisplayCalendar()
+int getColor(String color)
 {
+  if (color == "")
+    return LightGrey;
+  if (color == "5")
+    return Grey;
+  if (color == "11")
+    return DarkGrey;
+  return Black;
+}
+
+String getTime(String startTime)
+{
+  startTime.replace("T", " ");
+  return startTime.substring(0, 16);
+}
+
+void DisplayCalendarRow(int row, String color, String title, String startTime)
+{
+  int row_h_offset = 30;
+  int row_y_pos = 65;
+  int circle_r = 10;
+  int c = getColor(color);
+  String t = getTime(startTime);
+
+  //first row
+  fillCircle(10, (row * row_y_pos) + row_h_offset + (circle_r / 2) + 5, circle_r, c);
+  drawString(30, (row * row_y_pos) + row_h_offset, t, LEFT);
+
+  //second row
+  drawString(20, (row * row_y_pos + 20) + row_h_offset, title, LEFT);
+}
+
+void DrawNumberMissingEntries(int item_cnt)
+{
+  setFont(OpenSans8B);
+  drawString(10, 6, "-" + String(item_cnt), LEFT);
+}
+
+void DisplayCalendar(String *calendarData)
+{
+  DynamicJsonDocument doc(6 * 1024);
+  DeserializationError error = deserializeJson(doc, *calendarData);
+
+  if (error)
+  {
+    Serial.print(F("deserializeJson() failed: "));
+    Serial.println(error.c_str());
+    return;
+  }
+
+  JsonObject root = doc.as<JsonObject>();
+  String status = root["status"].as<char *>();
+  Serial.println("status: " + String(status));
+
+  if (status != "success")
+  {
+    Serial.print(F("\"status\" is not success"));
+    return;
+  }
+
+  int item_cnt = root["data"]["itemsCnt"].as<int>();
+
+  setFont(OpenSans12B);
+  for (int i = 0; i < MAX_CALENDAR_ROW; i++, item_cnt--)
+  {
+    Serial.println("Try to get element: " + String(i));
+    String title = root["data"]["items"][i]["title"].as<char *>();
+    String color = root["data"]["items"][i]["color"].as<char *>();
+    String startTime = root["data"]["items"][i]["startTime"].as<char *>();
+    Serial.println(" " + String(i) + " color:" + color + ", title: " + title + ", startTime: " + startTime);
+    DisplayCalendarRow(i, color, title, startTime);
+  }
+
+  if (item_cnt > 0)
+    DrawNumberMissingEntries(item_cnt);
 }
 #endif
