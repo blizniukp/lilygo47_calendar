@@ -44,7 +44,7 @@ void DisplayStatus();
 void DisplayCalendar(String *calendarData);
 uint8_t StartWiFi();
 void StopWiFi();
-String ObtainCalendarData(WiFiClient &client);
+String ObtainCalendarData();
 void edp_update();
 
 void setup()
@@ -53,8 +53,7 @@ void setup()
   InitialiseSystem();
   if (StartWiFi() == WL_CONNECTED)
   {
-    WiFiClient client;
-    String response = ObtainCalendarData(client);
+    String response = ObtainCalendarData();
 
     StopWiFi();
 #if EPD
@@ -72,7 +71,7 @@ void setup()
 
 void loop() {}
 
-String ObtainCalendarData(WiFiClient &client)
+String ObtainCalendarData()
 {
   String response = httpsGet();
   Serial.printf("Response: %s\n\n", response.c_str());
@@ -238,32 +237,31 @@ int getColor(String color)
   return Black;
 }
 
-String getTime(String startTime)
-{
-  startTime.replace("T", " ");
-  return startTime.substring(0, 16);
-}
-
 void DisplayCalendarRow(int row, String color, String title, String startTime)
 {
   int row_h_offset = 30;
   int row_y_pos = 65;
   int circle_r = 10;
   int c = getColor(color);
-  String t = getTime(startTime);
 
   //first row
   fillCircle(10, (row * row_y_pos) + row_h_offset + (circle_r / 2) + 5, circle_r, c);
-  drawString(30, (row * row_y_pos) + row_h_offset, t, LEFT);
+  drawString(30, (row * row_y_pos) + row_h_offset, startTime, LEFT);
 
   //second row
-  drawString(20, (row * row_y_pos + 20) + row_h_offset, title, LEFT);
+  drawString(20, (row * row_y_pos + 25) + row_h_offset, title, LEFT);
 }
 
 void DrawNumberMissingEntries(int item_cnt)
 {
   setFont(OpenSans8B);
   drawString(10, 6, "-" + String(item_cnt), LEFT);
+}
+
+void DrawCurrentDate(String curr_date)
+{
+  setFont(OpenSans8B);
+  drawString(40, 4, curr_date, LEFT);
 }
 
 void DisplayCalendar(String *calendarData)
@@ -290,8 +288,10 @@ void DisplayCalendar(String *calendarData)
 
   int item_cnt = root["data"]["itemsCnt"].as<int>();
 
+  int items_to_display = item_cnt > MAX_CALENDAR_ROW ? MAX_CALENDAR_ROW : item_cnt;
+
   setFont(OpenSans12B);
-  for (int i = 0; i < MAX_CALENDAR_ROW; i++, item_cnt--)
+  for (int i = 0; i < items_to_display; i++, item_cnt--)
   {
     Serial.println("Try to get element: " + String(i));
     String title = root["data"]["items"][i]["title"].as<char *>();
@@ -303,5 +303,7 @@ void DisplayCalendar(String *calendarData)
 
   if (item_cnt > 0)
     DrawNumberMissingEntries(item_cnt);
+
+  DrawCurrentDate(root["date"].as<char *>());
 }
 #endif
