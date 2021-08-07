@@ -229,12 +229,44 @@ void DisplayStatus()
 int getColor(String color)
 {
   if (color == "")
-    return LightGrey;
-  if (color == "5")
     return Grey;
-  if (color == "11")
+
+#define COLOR_LAVENDER (1)
+#define COLOR_SAGE (2)
+#define COLOR_GRAPE (3)
+#define COLOR_FLAMINGO (4)
+#define COLOR_BANANA (5)
+#define COLOR_TANGERINE (6)
+#define COLOR_PEACOCK (7)
+#define COLOR_GRAPHITE (8)
+#define COLOR_BLUEBERRY (9)
+#define COLOR_BASIL (10)
+#define COLOR_TOMATO (11)
+
+  switch (color.toInt())
+  {
+  case COLOR_TOMATO:
+  case COLOR_TANGERINE:
+  case COLOR_SAGE:
+    return LightGrey;
+
+  case COLOR_PEACOCK:
+  case COLOR_LAVENDER:
+  case COLOR_GRAPHITE:
+    return Grey;
+
+  case COLOR_FLAMINGO:
+  case COLOR_BANANA:
+  case COLOR_BASIL:
     return DarkGrey;
-  return Black;
+
+  case COLOR_BLUEBERRY:
+  case COLOR_GRAPE:
+    return Black;
+
+  default:
+    return Grey;
+  }
 }
 
 void DisplayCalendarRow(int row, String color, String title, String startTime)
