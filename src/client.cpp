@@ -42,13 +42,10 @@ String httpsGet(void)
     }
   }
 
-  if (!gotRecirectUrl)
-  {
-    client.stop();
-    return "";
-  }
-
   client.stop();
+
+  if (!gotRecirectUrl)
+    return "";
 
   if (!client.connect("script.googleusercontent.com", HTTPS_PORT))
   {
