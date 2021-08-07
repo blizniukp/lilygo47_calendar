@@ -1,0 +1,71 @@
+function doGet() {
+  const SECOND = 1;
+  const MINUTE = 60 * SECOND;
+  const HOUR = 60 * MINUTE;
+  const DAY = 24 * HOUR;
+  const WEEK = 7 * DAY;
+  const SIXTYDAYS = 60 * DAY;
+
+  var _calendarName = '___CALENDAR_NAME___',
+    _checkInRate = SIXTYDAYS;
+  return ContentService.createTextOutput(getOutput(_calendarName, _checkInRate));
+}
+
+function getOutput(calendarName, offset) {
+  return JSON.stringify(getResponse(calendarName, offset));
+}
+
+function covertToLocalDateTime(dateToConvert) {
+  var date = new Date(dateToConvert).toLocaleString('pl-PL', { hour12: false }).split(",");
+
+  var time = date[1];
+  var dmy = date[0];
+
+  dmy = dmy.split('.');
+  var day = dmy[0].trim().padStart(2, '0');
+  var month = dmy[1].trim().padStart(2, '0');
+  var year = dmy[2].trim();
+
+  time = time.split(':');
+  var hour = time[0].trim().padStart(2, '0');
+  var minute = time[1].trim().padStart(2, '0');
+
+  return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+}
+
+function getResponse(calendarName, offset) {
+  var now = new Date();
+  var curr_date = covertToLocalDateTime(now);
+
+  var cal = CalendarApp.getCalendarsByName(calendarName)[0];
+  if (!cal) {
+    return { status: 'error', date: curr_date, message: 'Error, calendar "' + calendarName + '" does not exist.' };
+  }
+
+  var now = new Date(),
+    later = new Date();
+
+  later.setDate(now.getDate() + offset);
+
+  var items = cal.getEvents(now, later),
+    length = items.length,
+    response = {};
+
+  response.itemsCnt = length;
+  var citems = [];
+
+  for (var i in items) {
+    var t = items[i].getTitle().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")
+
+    var item = {
+      title: t,
+      color: items[i].getColor(),
+      startTime: covertToLocalDateTime(items[i].getStartTime()),
+      endTime: covertToLocalDateTime(items[i].getEndTime())
+    };
+    citems.push(item);
+  }
+  response.items = citems;
+
+  return { status: 'success', date: curr_date, data: response };
+}
