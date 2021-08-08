@@ -3,6 +3,7 @@
 *Read this in other language: [English](README.md), [Polski](README.pl.md).*
 
 Aplikacja do wyświetlania wpisów z kalendarza Google na LILYGO 4,7".
+![lilygo47_calendar](/img/img1.jpg)
 
 # Sprzęt
 W projekcie zostało wykorzystane urzadzenie LILIGO z EPD o przekątnej 4,7".
@@ -89,6 +90,10 @@ Każdy wpis w kalendarzu można opatrzyć odpowiednim kolorem który stanowi pri
 | Winogrona        | 3                         | Black (0x00)                |
 | Kolor kalendarza |                           | Grey (0x88)                 |
 
+
+# Obudowa
+W projekcie została wykorzsytana obudowa wykonana przez [3DMath](https://www.thingiverse.com/3dmath/designs)
+Link do obudowy: https://www.thingiverse.com/thing:4908721
 
 # Licencja
 MIT
