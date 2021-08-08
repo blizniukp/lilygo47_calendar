@@ -6,7 +6,7 @@
 #define WIFI_PASSWORD         "Your PASSWORD"
 
 #define SCRIPT_ID             "YOUR_GOOGLE_SCRIPT_ID"
-#define SLEEP_TIMER           (360)
+#define SLEEP_TIMER           (60 * 60 * 12) //12 hours
 
 // HTTPS parameters
 #define HTTPS_PORT            443
