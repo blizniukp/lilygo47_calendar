@@ -2,15 +2,15 @@
 
 *Read this in other language: [English](README.md), [Polski](README.pl.md).*
 
-Aplikacja do wyświetlania wpisów z kalendarza Google na LILYGO 4,7".
+Aplikacja do wyświetlania wpisów z kalendarza Google na urządzeniu LILYGO 4,7".
 ![lilygo47_calendar](/img/img1.jpg)
 
 # Sprzęt
 W projekcie zostało wykorzystane urzadzenie LILIGO z EPD o przekątnej 4,7".
 [http://www.lilygo.cn/](http://www.lilygo.cn/prod_view.aspx?TypeId=50031&Id=1384&FId=t3:50031:3)
 
-# Opis działania
-Urządzenie cyklicznie łączy się z wifi, a następnie pobiera informacje o zaplanowanych wydarzeniach (z wykorzystaniem AppScripts) z naszego kalendarza. Po pobraniu danych zostają one wyświetlone, a samo urządzenie zostaje uśpione.
+# Opis
+Urządzenie cyklicznie łączy się z wifi, a następnie pobiera informacje o zaplanowanych wydarzeniach (z wykorzystaniem Apps Scripts) z naszego kalendarza. Po pobraniu danych zostają one wyświetlone, a samo urządzenie zostaje uśpione.
 
 Prezentowane dane składają się z dwóch głównych elementów:
 * Pasek stanu,
@@ -21,9 +21,9 @@ Pasek stanu zawiera informacje (od lewej) o:
 -- Dacie oraz godzinie pobrania informacji
 -- Poziomie naładowania baterii oraz napięciu zasilania
 
-# Konfiguracja / Wdrożenie / Programowanie
+# Instalacja
 ### Skrypt Google
-#### Dodawanei skryptu w AppScript
+#### Dodawanie skryptu w Apps Script
 W celu dodania skryptu który będzie pobierał i przygotowywał dane z kalendarza należy przejść na stronę [https://script.google.com](https://script.google.com).
 Następnie należy wybrać "Nowy projekt". W oknie które się pojawi należy wkleić kod z pliku `calendar_script.gc`.
 We fragmencie kodu
@@ -75,7 +75,7 @@ Po wykonaniu powyższych czynności można podłączyć urządzenie LILYGO do ko
 ### Priorytety zadań
 Każdy wpis w kalendarzu można opatrzyć odpowiednim kolorem który stanowi priorytet. Im wyższy priorytet tym ciemniejsza kropka jest wyświetlana przy wpisie.
 
-| Nazwa            | Wartość z AppScript (int) | Wartość do EPD (nazwa, hex) |
+| Nazwa            | Wartość z Apps Script (int) | Wartość do EPD (nazwa, hex) |
 |------------------|---------------------------|-----------------------------|
 | Pomidor          | 11                        | LightGrey (0xBB)            |
 | Mandarynka       | 6                         | LightGrey (0xBB)            |
@@ -92,7 +92,7 @@ Każdy wpis w kalendarzu można opatrzyć odpowiednim kolorem który stanowi pri
 
 
 # Obudowa
-W projekcie została wykorzsytana obudowa wykonana przez [3DMath](https://www.thingiverse.com/3dmath/designs)
+W projekcie została wykorzystana obudowa wykonana przez [3DMath](https://www.thingiverse.com/3dmath/designs)
 Link do obudowy: https://www.thingiverse.com/thing:4908721
 
 # Licencja
