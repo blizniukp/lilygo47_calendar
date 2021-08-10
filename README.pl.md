@@ -25,6 +25,9 @@ Pasek stanu zawiera informacje (od lewej) o:
 
 # Instalacja
 ### Skrypt Google
+
+Skrypt 'calendar_script.gc' bazuje na skrypcie wykonanym przez [ClemRz](https://github.com/ClemRz). Oryginalny skrypt dostępny jest pod adresem: [https://github.com/ClemRz/GCalendar-Irrigation](https://github.com/ClemRz/GCalendar-Irrigation/blob/master/software%20design/Google%20Script/Code.gs)
+
 #### Dodawanie skryptu w Apps Script
 W celu dodania skryptu który będzie pobierał i przygotowywał dane z kalendarza należy przejść na stronę [https://script.google.com](https://script.google.com).
 Następnie należy wybrać "Nowy projekt". W oknie które się pojawi należy wkleić kod z pliku `calendar_script.gc`.

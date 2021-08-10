@@ -25,6 +25,9 @@ The status bar contains information (from the left) about:
 
 # Installation
 ### Google Apps Script
+
+The 'calendar_script.gc' script is based on a script made by [ClemRz](https://github.com/ClemRz). The original script is available at: [https://github.com/ClemRz/GCalendar-Irrigation](https://github.com/ClemRz/GCalendar-Irrigation/blob/master/software%20design/Google%20Script/Code.gs)
+
 #### Adding a script to Apps Script
 In order to add a script that will download and prepare data from the calendar, go to [https://script.google.com](https://script.google.com).
 Then select "New Project". In the window that appears, paste the code from the file `calendar_script.gc`.
