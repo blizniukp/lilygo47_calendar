@@ -4,6 +4,8 @@
 
 Aplikacja do wyświetlania wpisów z kalendarza Google na urządzeniu LILYGO 4,7".
 ![lilygo47_calendar](/img/img1.jpg)
+![lilygo47_calendar](/img/img2.jpg)
+![lilygo47_calendar](/img/img3.jpg)
 
 # Sprzęt
 W projekcie zostało wykorzystane urzadzenie LILIGO z EPD o przekątnej 4,7".
