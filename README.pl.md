@@ -34,14 +34,14 @@ Następnie należy wybrać "Nowy projekt". W oknie które się pojawi należy wk
 We fragmencie kodu
 ```
   var _calendarName = '___CALENDAR_NAME___',
-    _checkInRate = SIXTYDAYS;
+    _checkInRate = RANGE;
 ```
 należy podmienić tekst `___CALENDAR_NAME___` na nazwę naszego kalendarza.
 
 Jeżeli w Google mamy zalożoną rodzinę [https://families.google.com/families](https://families.google.com/families) to możemy współdzielić kalendarz pomiędzy wszystkie osoby. W takim przypadku należy `___CALENDAR_NAME___` podmienić na `Familijne`. Gotowy fragment kodu powinien wygladać następująco:
 ```
   var _calendarName = 'Familijne',
-    _checkInRate = SIXTYDAYS;
+    _checkInRate = RANGE;
 ```
 
 #### Wdrażanie skryptu

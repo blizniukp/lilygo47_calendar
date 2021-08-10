@@ -34,14 +34,14 @@ Then select "New Project". In the window that appears, paste the code from the f
 In the code snippet:
 ```
   var _calendarName = '___CALENDAR_NAME___',
-    _checkInRate = SIXTYDAYS;
+    _checkInRate = RANGE;
 ```
 you must replace the text `___ CALENDAR_NAME ___` with the name of your calendar.
 
 If we have a family founded on Google [https://families.google.com/families](https://families.google.com/families) then we can share the calendar among all people in our family. If you need this functionality then replace `___ CALENDAR NAME ___` with `Family`. The finished code snippet should look like this:
 ```
   var _calendarName = 'Family',
-    _checkInRate = SIXTYDAYS;
+    _checkInRate = RANGE;
 ```
 
 #### Deploy script
