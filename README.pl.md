@@ -97,6 +97,8 @@ Każdy wpis w kalendarzu można opatrzyć odpowiednim kolorem który stanowi pri
 W projekcie została wykorzystana obudowa wykonana przez [3DMath](https://www.thingiverse.com/3dmath/designs)
 Link do obudowy: https://www.thingiverse.com/thing:4908721
 
+Z tyłu obudowy przylepiona jest taśma magnetyczna (trzy paski po 19mm szerokości), aby całość trzymała się lodówki.
+
 # Licencja
 MIT
 

@@ -1,13 +1,9 @@
 function doGet() {
-  const SECOND = 1;
-  const MINUTE = 60 * SECOND;
-  const HOUR = 60 * MINUTE;
-  const DAY = 24 * HOUR;
-  const WEEK = 7 * DAY;
-  const SIXTYDAYS = 60 * DAY;
+  const DAY = 1;
+  const RANGE = 60 * DAY;
 
   var _calendarName = '___CALENDAR_NAME___',
-    _checkInRate = SIXTYDAYS;
+    _checkInRate = RANGE;
   return ContentService.createTextOutput(getOutput(_calendarName, _checkInRate));
 }
 
