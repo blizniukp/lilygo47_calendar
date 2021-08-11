@@ -29,6 +29,11 @@ function covertToLocalDateTime(dateToConvert) {
   return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
 }
 
+function getDaysToEvent(eventDate){
+  var diffTime = Math.abs(new Date() - new Date(eventDate));
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+}
+
 function getResponse(calendarName, offset) {
   var now = new Date();
   var curr_date = covertToLocalDateTime(now);
@@ -53,11 +58,13 @@ function getResponse(calendarName, offset) {
   for (var i in items) {
     var t = items[i].getTitle().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")
 
+    var daysToEvent = getDaysToEvent(items[i].getStartTime());
     var item = {
       title: t,
       color: items[i].getColor(),
       startTime: covertToLocalDateTime(items[i].getStartTime()),
-      endTime: covertToLocalDateTime(items[i].getEndTime())
+      endTime: covertToLocalDateTime(items[i].getEndTime()),
+      daysToEvent: daysToEvent
     };
     citems.push(item);
   }

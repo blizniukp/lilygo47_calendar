@@ -117,7 +117,7 @@ void BeginSleep()
   esp_sleep_enable_timer_wakeup(SleepTimer * 1000000LL);
   Serial.println("Awake for : " + String((millis() - StartTime) / 1000.0, 3) + "-secs. Drawing time: " + String((millis() - DrawingTime) / 1000.0, 3) + "-secs.");
   Serial.println("Entering " + String(SleepTimer) + " (secs) of sleep time");
-  Serial.println("Starting deep-sleep period...");
+  Serial.println("Starting deep-sleep...");
   esp_deep_sleep_start();
 }
 
@@ -222,8 +222,8 @@ void DrawBattery(int x, int y)
 void DisplayStatus()
 {
   setFont(OpenSans8B);
-  DrawBattery(770, 20);
-  drawLine(0, 20, SCREEN_WIDTH, 22, Black);
+  DrawBattery(770, 18);
+  drawLine(0, 20, SCREEN_WIDTH, 20, Black);
 }
 
 int getColor(String color)
@@ -269,16 +269,26 @@ int getColor(String color)
   }
 }
 
-void DisplayCalendarRow(int row, String color, String title, String startTime)
+String createEventRow(String startTime, int daysToEvent){
+  String eventRow = "[";
+  if(daysToEvent < 10) eventRow+=" ";
+  eventRow += String(daysToEvent);
+  eventRow += "]  " + startTime;
+
+  return eventRow;
+}
+
+void DisplayCalendarRow(int row, String color, String title, String startTime, int daysToEvent)
 {
   int row_h_offset = 30;
   int row_y_pos = 65;
   int circle_r = 10;
   int c = getColor(color);
+  String eventRow = createEventRow(startTime, daysToEvent);
 
   //first row
   fillCircle(10, (row * row_y_pos) + row_h_offset + (circle_r / 2) + 5, circle_r, c);
-  drawString(30, (row * row_y_pos) + row_h_offset, startTime, LEFT);
+  drawString(30, (row * row_y_pos) + row_h_offset - 5, eventRow, LEFT);
 
   //second row
   drawString(20, (row * row_y_pos + 25) + row_h_offset, title, LEFT);
@@ -329,8 +339,10 @@ void DisplayCalendar(String *calendarData)
     String title = root["data"]["items"][i]["title"].as<char *>();
     String color = root["data"]["items"][i]["color"].as<char *>();
     String startTime = root["data"]["items"][i]["startTime"].as<char *>();
-    Serial.println(" " + String(i) + " color:" + color + ", title: " + title + ", startTime: " + startTime);
-    DisplayCalendarRow(i, color, title, startTime);
+    int daysToEvent = root["data"]["items"][i]["daysToEvent"].as<int>();
+
+    Serial.println(" " + String(i) + " color:" + color + ", title: " + title + ", startTime: " + startTime + ", daysToEvent: " + String(daysToEvent));
+    DisplayCalendarRow(i, color, title, startTime, daysToEvent);
   }
 
   if (item_cnt > 0)
